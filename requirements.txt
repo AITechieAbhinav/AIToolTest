@@ -4,4 +4,6 @@ langchain_huggingface
 langchain_community
 langchain_text_splitters
 PyPDF2
+PdfReader
 faiss-cpu
+
