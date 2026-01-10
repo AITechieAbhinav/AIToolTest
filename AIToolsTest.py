@@ -4,7 +4,7 @@ from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.llms import Ollama
 from langchain_classic.chains.question_answering import load_qa_chain
-from langchain.callbacks import get_openai_callback
+from langchain_community.callbacks import get_openai_callback
 from PyPDF2 import PdfReader
 
 pdf_file = st.file_uploader("Upload your file", type ="pdf")
