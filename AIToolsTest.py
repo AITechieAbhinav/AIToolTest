@@ -1,8 +1,9 @@
 import streamlit as st
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndPoint
 from langchain_community.vectorstores import FAISS
-from langchain_community.llms import Ollama
+#from langchain_community.llms import Ollama
 from langchain_classic.chains.question_answering import load_qa_chain
 from langchain_community.callbacks import get_openai_callback
 from PyPDF2 import PdfReader
@@ -45,7 +46,7 @@ database = FAISS.from_texts(data,embeddings)
 
 u_input = st.text_input("Please ask questions about PDF file")
 
-llm = Ollama(model="llama3")
+llm = HuggingFaceEndPoint(model="meta-llama/Llama-3.1-8B-Instruct", token="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")
 
 if u_input :
     search_result = database.similarity_search(u_input)
