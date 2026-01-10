@@ -46,7 +46,7 @@ database = FAISS.from_texts(data,embeddings)
 
 u_input = st.text_input("Please ask questions about PDF file")
 
-llm = HuggingFaceEndpoint(repo_id="meta-llama/Meta-Llama-3-8B-Instruct", huggingfacehub_api_token="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")
+llm = HuggingFaceEndpoint(repo_id="meta-llama/Meta-Llama-3-8B-Instruct", provider="novita", huggingfacehub_api_token="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")
 
 chat_model = ChatHuggingFace(llm=llm)
 
