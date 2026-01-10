@@ -6,4 +6,4 @@ langchain_text_splitters
 PyPDF2
 PdfReader
 faiss-cpu
-
+transformers
