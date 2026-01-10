@@ -12,7 +12,7 @@ pdf_file = st.file_uploader("Upload your file", type ="pdf")
 text=""
 
 if pdf_file is not None:
-    reader = Pdfreader(pdf_file)
+    reader = PdfReader(pdf_file)
     
     for page_text in reader.pages:
         if page_text:
