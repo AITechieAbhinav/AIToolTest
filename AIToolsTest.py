@@ -57,7 +57,7 @@ if u_input :
     chain = load_qa_chain(chat_model,chain_type="stuff",verbose=True)
 
     with get_openai_callback() as cb:
-        reponse = chain.run(input_documents= search_result, question=u_input)
+        response = chain.run(input_documents= search_result, question=u_input)
         print(cb)
 
     st.write(response)
