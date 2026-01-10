@@ -1,5 +1,6 @@
 Ollama
 langchain 
+langchain_classic
 langchain_huggingface
 langchain_community
 langchain_text_splitters
@@ -8,3 +9,4 @@ PdfReader
 faiss-cpu
 transformers
 sentence-transformers
+
