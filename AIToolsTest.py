@@ -4,6 +4,7 @@ from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_huggingface import HuggingFaceEndpoint
 from langchain_community.vectorstores import FAISS
 from langchain_classic.chains.question_answering import load_qa_chain
+from langchain_huggingface.chat_models import ChatHuggingFace
 from langchain_community.callbacks import get_openai_callback
 from PyPDF2 import PdfReader
 
@@ -45,11 +46,13 @@ database = FAISS.from_texts(data,embeddings)
 
 u_input = st.text_input("Please ask questions about PDF file")
 
-llm = HuggingFaceEndpoint(repo_id="google/flan-t5-large", task="conversational", huggingfacehub_api_token="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")
+llm = HuggingFaceEndpoint(repo_id="meta-llama/Meta-Llama-3-8B-Instruct", huggingfacehub_api_token="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")
+
+chat_model = ChatHuggingFace(llm=llm)
 
 if u_input :
     search_result = database.similarity_search(u_input)
-    chain = load_qa_chain(llm,chain_type="stuff",verbose=True)
+    chain = load_qa_chain(chat_model,chain_type="stuff",verbose=True)
 
     with get_openai_callback() as cb:
         reponse = chain.run(input_documents= search_result, question=u_input)
