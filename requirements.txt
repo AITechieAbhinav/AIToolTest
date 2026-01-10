@@ -3,5 +3,5 @@ langchain
 langchain_huggingface
 langchain_community
 langchain_text_splitters
-PyPDF
+PyPDF2
 faiss-cpu
