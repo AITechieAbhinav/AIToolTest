@@ -1,5 +1,4 @@
 import streamlit as st
-import json
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_huggingface import HuggingFaceEndpoint
@@ -9,11 +8,7 @@ from langchain_huggingface.chat_models import ChatHuggingFace
 from langchain_community.callbacks import get_openai_callback
 from PyPDF2 import PdfReader
 
-# Load credentials from config file
-
-with open("config.json", 'r') as f:
-    config = json.load(f)
-print("config file read is successful,below are the values from file - \n")
+api_key = st.secrets['api_key']
 
 pdf_file = st.file_uploader("Upload your file", type ="pdf")
 
@@ -53,7 +48,7 @@ database = FAISS.from_texts(data,embeddings)
 
 u_input = st.text_input("Please ask questions about PDF file")
 
-llm = HuggingFaceEndpoint(repo_id="meta-llama/Meta-Llama-3-8B-Instruct", huggingfacehub_api_token=config["api_key"])
+llm = HuggingFaceEndpoint(repo_id="meta-llama/Meta-Llama-3-8B-Instruct", huggingfacehub_api_token=api_key)
 
 chat_model = ChatHuggingFace(llm=llm)
 
