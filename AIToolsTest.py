@@ -3,7 +3,7 @@ from langchain_text_splitters import CharacterTextSplitter
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.llms import Ollama
-from PyPDF2 import Pdfreader
+from PyPDF2 import PdfReader
 
 pdf_file = st.file_uploader("Upload your file", type ="pdf")
 
