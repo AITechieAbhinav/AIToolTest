@@ -48,7 +48,7 @@ u_input = st.text_input("Please ask questions about PDF file")
 llm = Ollama(model="llama3")
 
 if u_input :
-    search_result = databse.similarity_search(user_input)
+    search_result = database.similarity_search(user_input)
     chain = load_qa_chain(llm,chain_type="stuff",verbose=True)
 
     with get_openai_callback() as cb:
