@@ -1,4 +1,6 @@
 streamlit
-transformers
-soundfile 
 torch
+transformers
+soundfile
+sentencepiece
+accelerate
