@@ -1,13 +1,21 @@
+import streamlit as st
+import torch
 from diffusers import StableDiffusionPipeline 
+
+st.set_page_config(page_title="AI Image Generator", layout="centered")
+st.title("🎨 AI Image Generator (Stable Diffusion)")
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 modelid = "CompVis/stable-diffusion-v1-4"
 device = "cuda"
-pipe = StableDiffusionPipeline.from_pretrained(modelid, revision="fp16", torch_dtype=torch.float16, use_auth_token="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") 
+pipe = StableDiffusionPipeline.from_pretrained(modelid, revision="fp16", torch_dtype=torch.float16, use_auth_token=api_key) 
 pipe.to(device) 
 
-prompt = """dreamlikeart, a grungy woman with rainbow hair, travelling between dimensions, dynamic pose, happy, soft eyes and narrow chin,
-extreme bokeh, dainty figure, long hair straight down, torn kawaii shirt and baggy jeans
-"""
+prompt = st.text_area("Enter your prompt",value=
+                      """dreamlikeart, a grungy woman with rainbow hair, travelling between dimensions,dynamic pose, happy, soft eyes and narrow chin, 
+                      extreme bokeh, dainty figure,long hair straight down, torn kawaii shirt and baggy jeans
+                      """)
 
 image = pipe(prompt).images[0]
 
