@@ -17,7 +17,7 @@ if st.button("Submit"):
     inputs = tokenizer(input_text, return_tensors="pt")
     summary_ids = model.generate(
         inputs.input_ids,
-        max_length=50,
+        max_length=200,
         num_beams=5,
         early_stopping=True
     )
