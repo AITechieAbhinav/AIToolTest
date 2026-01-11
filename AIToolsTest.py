@@ -1,23 +1,26 @@
-import streamlit as st #for web dev
-from aitextgen import aitextgen #for ai text gen
+import vertexai
+from vertexai.generative_models import GenerativeModel
+import streamlit as st
 
-st.title("AITEXTGEN Web App")
+def generate(prompt):
+ vertexai.init(project="<YOUR_PROJECT_ID>", location="us-central1")
+ model = GenerativeModel("gemini-1.5-flash-001")
 
-# instantiate the model / download
-ai = aitextgen()
+ responses = model.generate_content(
+   prompt,
+   generation_config=generation_config,
+   stream=False,
+  )
 
-# create a prompt text for the text generation 
-#prompt_text = "Python is awesome"
-prompt_text = st.text_input(label = "Enter your prompt text...",
-            value = "Computer is beautiful")
+ st.write(responses.text)
 
-with st.spinner("AI is at Work........"):
-    # text generation
-    gpt_text = ai.generate_one(prompt=prompt_text,
-            max_length = 100 )
-st.success("AI Successfully generated the below text ")
-st.balloons()
-# print ai generated text
-print(gpt_text)
+generation_config = {
+    "max_output_tokens": 8192,
+    "temperature": 1,
+    "top_p": 0.95,
+}
 
-st.text(gpt_text)
+prompt = st.text_input("Enter prompt")
+if prompt:
+ with st.spinner('Processing...'):
+  generate(prompt)
