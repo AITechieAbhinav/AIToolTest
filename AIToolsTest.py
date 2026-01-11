@@ -22,5 +22,15 @@ if st.button("Generate Speech"):
     else:
         with st.spinner("Generating speech..."):
             output = tts(text)
+
+            # Save audio to temp file
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+                sf.write(
+                    tmp.name,
+                    output["audio"],
+                    output["sampling_rate"]
+                )
+                audio_path = tmp.name
+
         st.success("Speech generated successfully!")
         st.audio(audio_path)
