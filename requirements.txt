@@ -1,2 +1,5 @@
-vertexai
+transformers
+datasets
+torch
+soundfile
 streamlit
