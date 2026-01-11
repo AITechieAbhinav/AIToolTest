@@ -2,7 +2,7 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration
 import torch
 import streamlit as st
 
-model_name = "t5-base" 
+model_name = "google/pegasus-cnn_dailymail" 
 tokenizer = T5Tokenizer.from_pretrained(model_name)
 model = T5ForConditionalGeneration.from_pretrained(model_name)
 
