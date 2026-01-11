@@ -1,5 +1,2 @@
-diffusers
-transformers
+aitextgen
 streamlit
-torch
-accelerate
