@@ -11,7 +11,7 @@ device = "cpu"
 
 modelid = "CompVis/stable-diffusion-v1-4"
 device = "cuda"
-pipe = StableDiffusionPipeline.from_pretrained(modelid, revision="fp16", torch_dtype=torch.float32, token=api_key) 
+pipe = StableDiffusionPipeline.from_pretrained(modelid, revision="fp16", dtype=torch.float32, token=api_key) 
 pipe.to(device) 
 
 prompt = st.text_area("Enter your prompt",value=
