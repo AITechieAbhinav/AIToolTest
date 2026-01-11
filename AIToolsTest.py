@@ -2,6 +2,8 @@ import streamlit as st
 import torch
 from diffusers import StableDiffusionPipeline 
 
+api_key = st.secrets['api_key']
+
 st.set_page_config(page_title="AI Image Generator", layout="centered")
 st.title("🎨 AI Image Generator (Stable Diffusion)")
 
