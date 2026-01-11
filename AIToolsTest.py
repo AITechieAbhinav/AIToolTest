@@ -1,19 +1,23 @@
-import streamlit as st
-import torch
-from diffusers import DiffusionPipeline 
+import streamlit as st #for web dev
+from aitextgen import aitextgen #for ai text gen
 
-api_key = st.secrets['api_key']
+st.title("AITEXTGEN Web App")
 
-st.set_page_config(page_title="AI Image Generator", layout="centered")
-st.title("🎨 AI Image Generator (Stable Diffusion)")
+# instantiate the model / download
+ai = aitextgen()
 
-pipe = DiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-2", dtype=torch.bfloat16, device_map="cpu")
+# create a prompt text for the text generation 
+#prompt_text = "Python is awesome"
+prompt_text = st.text_input(label = "Enter your prompt text...",
+            value = "Computer is beautiful")
 
-prompt = st.text_area("Enter your prompt",value=
-                      """dreamlikeart, a grungy woman with rainbow hair, travelling between dimensions,dynamic pose, happy, soft eyes and narrow chin, 
-                      extreme bokeh, dainty figure,long hair straight down, torn kawaii shirt and baggy jeans
-                      """)
+with st.spinner("AI is at Work........"):
+    # text generation
+    gpt_text = ai.generate_one(prompt=prompt_text,
+            max_length = 100 )
+st.success("AI Successfully generated the below text ")
+st.balloons()
+# print ai generated text
+print(gpt_text)
 
-image = pipe(prompt).images[0]
-
-st.image(image, caption="My Photo", use_container_width=True)
+st.text(gpt_text)
