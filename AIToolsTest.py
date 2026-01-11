@@ -1,3 +1,4 @@
+import pytorch
 from diffusers import StableDiffusionPipeline 
 
 modelid = "CompVis/stable-diffusion-v1-4"
