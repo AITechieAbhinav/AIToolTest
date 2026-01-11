@@ -7,7 +7,7 @@ api_key = st.secrets['api_key']
 st.set_page_config(page_title="AI Image Generator", layout="centered")
 st.title("🎨 AI Image Generator (Stable Diffusion)")
 
-pipe = DiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-2", dtype=torch.bfloat16, device_map="cuda")
+pipe = DiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-2", dtype=torch.bfloat16, device_map="cpu")
 
 prompt = st.text_area("Enter your prompt",value=
                       """dreamlikeart, a grungy woman with rainbow hair, travelling between dimensions,dynamic pose, happy, soft eyes and narrow chin, 
