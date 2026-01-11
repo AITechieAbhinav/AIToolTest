@@ -2,3 +2,4 @@ diffusers
 transformers
 streamlit
 torch
+accelerate
