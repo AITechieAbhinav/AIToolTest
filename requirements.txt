@@ -2,5 +2,3 @@ diffusers
 transformers
 streamlit
 torch
-pytorch
-
