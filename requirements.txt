@@ -1,12 +1,2 @@
-Ollama
-langchain 
-langchain_classic
-langchain_huggingface
-langchain-huggingface
-langchain_community
-langchain_text_splitters
-PyPDF2
-PdfReader
-faiss-cpu
+diffusers
 transformers
-sentence-transformers
