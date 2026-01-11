@@ -8,8 +8,14 @@ st.set_page_config(page_title="Text to Speech", layout="centered")
 st.title("🔊 Text to Speech (Facebook MMS)")
 
 # Load model once
-tts = pipeline("text-to-speech",model="facebook/mms-tts-eng")
+@st.cache_resource
+def load_tts():
+    return pipeline(
+        "text-to-speech",
+        model="facebook/mms-tts-eng"
+    )
 
+tts = load_tts()
 # User input
 text = st.text_area(
     "Enter text to convert to speech",
