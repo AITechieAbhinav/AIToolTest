@@ -1,10 +1,15 @@
-from transformers import T5Tokenizer, T5ForConditionalGeneration
+#from transformers import T5Tokenizer, T5ForConditionalGeneration
 import torch
 import streamlit as st
 
 model_name = "google/pegasus-cnn_dailymail" 
-tokenizer = T5Tokenizer.from_pretrained(model_name)
-model = T5ForConditionalGeneration.from_pretrained(model_name)
+#tokenizer = T5Tokenizer.from_pretrained(model_name)
+#model = T5ForConditionalGeneration.from_pretrained(model_name)
+
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+
+tokenizer = AutoTokenizer.from_pretrained("google/pegasus-cnn_dailymail")
+model = AutoModelForSeq2SeqLM.from_pretrained("google/pegasus-cnn_dailymail")
 
 st.set_page_config(page_title="AI Tools by Abhinav Gupta", layout="centered")
 
