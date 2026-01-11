@@ -14,12 +14,12 @@ input_text = st.text_input("Paste text below to Summarize")
 
 if st.button("Submit"):
 
-inputs = tokenizer(input_text, return_tensors="pt")
-summary_ids = model.generate(
-inputs.input_ids,
-max_length=200,
-num_beams=5,
-early_stopping=True
-)
-output_text = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-st.markdown(output_text)
+  inputs = tokenizer(input_text, return_tensors="pt")
+  summary_ids = model.generate(
+  inputs.input_ids,
+  max_length=200,
+  num_beams=5,
+  early_stopping=True
+  )
+  output_text = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+  st.markdown(output_text)
