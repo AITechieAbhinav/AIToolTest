@@ -1,26 +1,19 @@
-import vertexai
-from vertexai.generative_models import GenerativeModel
-import streamlit as st
+from transformers import SpeechT5Processor, SpeechT5ForTextToSpeech, SpeechT5HifiGan
+from datasets import load_dataset
+import torch
+import soundfile as sf
+from datasets import load_dataset
 
-def generate(prompt):
- vertexai.init(project="<YOUR_PROJECT_ID>", location="us-central1")
- model = GenerativeModel("gemini-1.5-flash-001")
+processor = SpeechT5Processor.from_pretrained("microsoft/speecht5_tts")
+model = SpeechT5ForTextToSpeech.from_pretrained("microsoft/speecht5_tts")
+vocoder = SpeechT5HifiGan.from_pretrained("microsoft/speecht5_hifigan")
 
- responses = model.generate_content(
-   prompt,
-   generation_config=generation_config,
-   stream=False,
-  )
+inputs = processor(text="Hello, my dog is cute.", return_tensors="pt")
 
- st.write(responses.text)
+# load xvector containing speaker's voice characteristics from a dataset
+embeddings_dataset = load_dataset("Matthijs/cmu-arctic-xvectors", split="validation")
+speaker_embeddings = torch.tensor(embeddings_dataset[7306]["xvector"]).unsqueeze(0)
 
-generation_config = {
-    "max_output_tokens": 8192,
-    "temperature": 1,
-    "top_p": 0.95,
-}
+speech = model.generate_speech(inputs["input_ids"], speaker_embeddings, vocoder=vocoder)
 
-prompt = st.text_input("Enter prompt")
-if prompt:
- with st.spinner('Processing...'):
-  generate(prompt)
+sf.write("speech.wav", speech.numpy(), samplerate=16000)
