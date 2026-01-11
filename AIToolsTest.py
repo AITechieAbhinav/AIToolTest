@@ -1,63 +1,14 @@
-import streamlit as st
-from langchain_text_splitters import CharacterTextSplitter
-from langchain_huggingface.embeddings import HuggingFaceEmbeddings
-from langchain_huggingface import HuggingFaceEndpoint
-from langchain_community.vectorstores import FAISS
-from langchain_classic.chains.question_answering import load_qa_chain
-from langchain_huggingface.chat_models import ChatHuggingFace
-from langchain_community.callbacks import get_openai_callback
-from PyPDF2 import PdfReader
+from diffusers import StableDiffusionPipeline 
 
-api_key = st.secrets['api_key']
+modelid = "CompVis/stable-diffusion-v1-4"
+device = "cuda"
+pipe = StableDiffusionPipeline.from_pretrained(modelid, revision="fp16", torch_dtype=torch.float16, use_auth_token="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") 
+pipe.to(device) 
 
-pdf_file = st.file_uploader("Upload your file", type ="pdf")
+prompt = """dreamlikeart, a grungy woman with rainbow hair, travelling between dimensions, dynamic pose, happy, soft eyes and narrow chin,
+extreme bokeh, dainty figure, long hair straight down, torn kawaii shirt and baggy jeans
+"""
 
-#extract text
+image = pipe(prompt).images[0]
 
-text=""
-
-if pdf_file is not None:
-    reader = PdfReader(pdf_file)
-    
-    for page_text in reader.pages:
-        if page_text:
-            text+=page_text.extract_text()
-
-#split text into chunks
-
-text_spliter = CharacterTextSplitter(
-    separator="\n",
-    chunk_size=1000,
-    chunk_overlap=200,
-    length_function= len
-)
-
-#Save chunks
-data = text_spliter.split_text(text)
-
-if len(data) == 0:
-    st.stop()
-
-#Create embeedings
-
-embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
-
-database = FAISS.from_texts(data,embeddings)
-
-#User input
-
-u_input = st.text_input("Please ask questions about PDF file")
-
-llm = HuggingFaceEndpoint(repo_id="meta-llama/Meta-Llama-3-8B-Instruct", huggingfacehub_api_token=api_key)
-
-chat_model = ChatHuggingFace(llm=llm)
-
-if u_input :
-    search_result = database.similarity_search(u_input)
-    chain = load_qa_chain(chat_model,chain_type="stuff",verbose=True)
-
-    with get_openai_callback() as cb:
-        response = chain.run(input_documents= search_result, question=u_input)
-        print(cb)
-
-    st.write(response)
+image
