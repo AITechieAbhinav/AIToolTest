@@ -11,4 +11,4 @@ extreme bokeh, dainty figure, long hair straight down, torn kawaii shirt and bag
 
 image = pipe(prompt).images[0]
 
-image
+st.write(image)
