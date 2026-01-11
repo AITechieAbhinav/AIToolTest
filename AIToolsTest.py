@@ -15,5 +15,4 @@ input_text = st.text_input("Paste text below to Summarize")
 if st.button("Submit") :
 
 		inputs = tokenizer(input_text, return_tensors="pt")
-		sm_txt = summarizer(inputs)
-		st.markdown(sm_txt)
+		st.markdown(inputs)
